@@ -1,11 +1,11 @@
-import Colors from "@/constants/Colors";
-import { Image, Text, StyleSheet, Pressable } from "react-native";
-import { Product } from "@assets/types";
-import { Link } from "expo-router";
+import Colors from "@/constants/Colors"
+import { Image, Text, StyleSheet, Pressable } from "react-native"
+import { Product } from "@/types"
+import { Link } from "expo-router"
 
 type ProductListItemProps = {
-    product: Product;
-};
+    product: Product
+}
 
 export default function ProductListItem({ product }: { product: Product }) {
     return (
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 'auto',
     },
-});
+})

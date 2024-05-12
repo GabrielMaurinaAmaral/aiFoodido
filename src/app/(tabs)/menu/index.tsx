@@ -11,7 +11,6 @@ export default function TabOneScreen() {
       numColumns={2}
       contentContainerStyle={{ gap: 20, padding: 20 }}
       columnWrapperStyle={{ gap: 10 }} />
-
   )
 }
 
