@@ -1,9 +1,7 @@
-import Colors from '@/constants/Colors'
-import React from 'react'
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
-
+import Colors from '@/constants/Colors'
 interface ButtonProps {
-    onPress: () => void
+    onPress?: () => void
     text: string
 }
 

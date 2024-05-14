@@ -11,10 +11,10 @@ const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL']
 
 export default function ProductDetailsScreen() {
     const { id } = useLocalSearchParams()
-    const { addItem } = useCart()
     const [selectedSize, setSelectedSize] = useState<PizzaSize>(sizes[2])
 
     const product = products.find((p) => p.id.toString() === id)
+    const { addItem } = useCart()
 
     const addToCart = () => {
         if (!product)

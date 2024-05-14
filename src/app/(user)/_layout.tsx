@@ -3,7 +3,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { Tabs } from 'expo-router'
 
 import Colors from '@/constants/Colors'
-import { useClientOnlyValue } from '@/components/useClientOnlyValue'
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name']
@@ -17,14 +16,13 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors.light.tint,
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-
+      }}
+    >
       <Tabs.Screen name="index" options={{ href: null }} />
       <Tabs.Screen
         name="menu"
         options={{
-          title: 'Menu em app>(tabs)>_layout',
+          title: 'MENU',
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="cutlery" color={color} />
