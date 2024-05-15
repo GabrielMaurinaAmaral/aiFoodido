@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
+    "@react-navigation/material-top-tabs": "^6.6.13",
     "@react-navigation/native": "^6.0.2",
     "dayjs": "^1.11.11",
     "expo": "~51.0.2",

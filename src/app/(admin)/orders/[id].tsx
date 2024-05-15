@@ -1,4 +1,3 @@
-
 import { Stack, useLocalSearchParams } from 'expo-router'
 import { View, StyleSheet, FlatList, Text, Pressable } from 'react-native'
 
