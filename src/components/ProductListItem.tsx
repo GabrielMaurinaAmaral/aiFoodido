@@ -1,16 +1,16 @@
-import Colors from "@/constants/Colors"
 import { Image, Text, StyleSheet, Pressable } from "react-native"
-import { Product } from "@/types"
 import { Link, useSegments } from "expo-router"
+
 import { defaultPizzaImage } from '@/constants/ImageDefault'
+import { Product } from "@/types"
+import Colors from "@/constants/Colors"
 
 type ProductListItemProps = {
     product: Product
 }
 
-export default function ProductListItem({ product }: { product: Product }) {
+export default function ProductListItem({ product }: ProductListItemProps) {
     const segments = useSegments()
-    console.log(segments)
 
     return (
         <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
