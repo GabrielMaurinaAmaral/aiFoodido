@@ -1,12 +1,12 @@
-import { Stack, useLocalSearchParams, useRouter } from "expo-router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { View, Text, Image, StyleSheet, TextInput, Alert } from "react-native"
+import { Stack, useLocalSearchParams, useRouter } from "expo-router"
 import * as ImagePicker from 'expo-image-picker'
 
-import { defaultPizzaImage } from "@/constants/ImageDefault"
 import Colors from "@/constants/Colors"
 import Button from "@/components/Button"
-
+import { defaultPizzaImage } from "@/constants/ImageDefault"
+import { useDeleteProduct, useInsertProduct, useProduct, useUpdateProduct } from "@/api/products"
 
 export default function CreateScreen() {
     const [image, setImage] = useState<string | null>(null)
@@ -14,16 +14,23 @@ export default function CreateScreen() {
     const [price, setPrice] = useState('')
     const [errors, setErrors] = useState<string[]>([])
 
-    const { id } = useLocalSearchParams()
+    const { id: idString } = useLocalSearchParams()
+    const id = parseFloat(typeof idString === 'string' ? idString : idString?.[0])
     const isUpdate = !!id
 
+    const { mutate: insertProduct } = useInsertProduct()
+    const { mutate: updateProduct } = useUpdateProduct();
+    const { mutate: deleteProduct } = useDeleteProduct();
+
     const router = useRouter()
+
 
     const resetFields = () => {
         setName('')
         setPrice('')
         setImage('')
-    };
+        console.log('resetFields')
+    }
 
     const validateInput = () => {
         let errorList = []
@@ -44,40 +51,60 @@ export default function CreateScreen() {
 
     const onSubmit = () => {
         if (isUpdate) {
-            onUpdate();
+            onUpdate()
         } else {
-            onCreate();
+            onCreate()
         }
-    };
+    }
 
     const onCreate = () => {
         if (!validateInput()) {
             return
         }
-        console.log('Create dish', image, name, price)
 
-        resetFields()
-        router.back()// voltar para o ultima tela
+        insertProduct(
+            { name, price: parseFloat(price), image },
+            {
+                onSuccess: () => {
+                    console.log('Create dish', image, name, price)
+                    resetFields();
+                    router.back();
+                },
+            }
+        )
     }
 
     const onUpdate = async () => {
         if (!validateInput()) {
-            return;
+            return
         }
-        console.log('Update dish', image, name, price)
+        updateProduct({ id, name, price: parseFloat(price), image },
+            {
+                onSuccess: () => {
+                    console.log('Update dish', image, name, price)
+                    resetFields()
+                    router.back()
+                }
+            }
+        )
+
     }
 
     const confirmDelete = () => {
         Alert.alert('Delete', 'Are you sure you want to delete this dish?', [
             { text: 'No' },
-            { text: 'Yes', onPress: onDelete }
+            { text: 'Yes', style: 'destructive', onPress: onDelete }
         ])
     }
 
     const onDelete = () => {
-        console.log('Delete dish', image, name, price)
-        resetFields()
-        router.back()
+        deleteProduct(id, {
+            onSuccess: () => {
+                console.log('Delete dish', id)
+                resetFields()
+                router.back()
+            },
+        });
     }
 
     const pickImage = async () => {
@@ -167,3 +194,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     }
 })
+function deleteProduct(id: number, arg1: { onSuccess: () => void }) {
+    throw new Error("Function not implemented.")
+}
+
