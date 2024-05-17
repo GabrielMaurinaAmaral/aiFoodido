@@ -125,7 +125,9 @@ export default function CreateScreen() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ title: isUpdate ? 'Update Produto' : 'Create Produto' }} />
+            <Stack.Screen
+                options={{ title: isUpdate ? 'Update Product' : 'Create Product' }}
+            />
 
             <Image
                 source={{ uri: image || defaultPizzaImage }}
