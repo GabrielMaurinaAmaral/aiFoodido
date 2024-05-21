@@ -3,6 +3,29 @@ import { useAuth } from "@/providers/AuthProvider"
 import { InsertTables, Order, OrderStatus, UpdateTables } from "@/types"
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
+export const useOrderList = ({ archived = false }: { archived: boolean }) => {
+  const statuses: OrderStatus[] = archived
+    ? ['Delivered']
+    : ['New', 'Cooking', 'Delivering']
+
+  return useQuery({
+    queryKey: ['orders', { archived }],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .in('status', statuses)
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        throw new Error(error.message)
+      }
+
+      return data
+    },
+  })
+}
+
 export const useMyOrders = () => {
   const { session } = useAuth()
   const id = session?.user.id
@@ -16,29 +39,6 @@ export const useMyOrders = () => {
         .from('orders')
         .select('*')
         .eq('user_id', id)
-        .order('created_at', { ascending: false })
-
-      if (error) {
-        throw new Error(error.message)
-      }
-
-      return data
-    },
-  })
-}
-
-export const useOrderList = ({ archived = false }: { archived: boolean }) => {
-  const statuses: OrderStatus[] = archived
-    ? ['Delivered']
-    : ['New', 'Cooking', 'Delivering']
-
-  return useQuery({
-    queryKey: ['orders', { archived }],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .in('status', statuses)
         .order('created_at', { ascending: false })
 
       if (error) {

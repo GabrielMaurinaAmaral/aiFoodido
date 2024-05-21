@@ -9,6 +9,7 @@ export default function OrdersScreen() {
     if (isLoading) {
       return <ActivityIndicator />;
     }
+    
     if (error) {
       return <Text>Failed to fetch</Text>;
     }

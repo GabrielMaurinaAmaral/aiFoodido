@@ -21,13 +21,13 @@ export default function OrdersDetailsScreen() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ title: `Order #${order.id}` }} />
-            <OrderListItem order={order} />
+            <Stack.Screen options={{ title: `Order #${id}` }} />
             
             <FlatList
                 data={order.order_items}
                 renderItem={({ item }) => <OrderItemListItem item={item} />}
                 contentContainerStyle={{ gap: 10 }}
+                ListHeaderComponent={() => <OrderListItem order={order} />}
             />
         </View>
     )

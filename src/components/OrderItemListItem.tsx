@@ -1,13 +1,12 @@
 import { View, Text, Image, StyleSheet } from "react-native"
 
-import { OrderItem } from "@/types"
+import { Tables } from "@/types"
 import { defaultPizzaImage } from "@/constants/ImageDefault"
 import Colors from "@/constants/Colors"
 
-
 type OrderItemListItemProps = {
-    item: OrderItem
-}
+    item: { products: Tables<'products'> } & Tables<'order_items'>;
+};
 
 export default function OrderItemListItem({ item }: OrderItemListItemProps) {
     return (
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginRight: 10,
     },
-    
+
 })
 
 export { styles };

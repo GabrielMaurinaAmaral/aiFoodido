@@ -5,9 +5,11 @@ import { useOrderList } from "@/api/orders";
 
 export default function OrdersScreen() {
     const { data: orders, isLoading, error } = useOrderList({ archived: true });
+   
     if (isLoading) {
       return <ActivityIndicator />;
     }
+    
     if (error) {
       return <Text>Failed to fetch</Text>;
     }
