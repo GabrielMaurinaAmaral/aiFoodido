@@ -68,27 +68,31 @@ export default function CartProvider({ children }: PropsWithChildren) {
     setItems([])
   }
 
-  const saveOrderItems = (order: Tables<'orders'>) => {
-    if (!order) return
-
-    insertOrderItems(
-      {
-        items,
-        order_id: order.id,
-      },
-      {
-      onSuccess() {
-        clearCart()
-        router.push(`/(user)/orders/${order.id}`)
-      },
-    })
-  }
-
   const checkout = async () => {
-    insertOrder(
-      { total },
+    insertOrder({ total },
       {
         onSuccess: saveOrderItems,
+      }
+    )
+  }
+
+  const saveOrderItems = (order: Tables<'orders'>) => {
+
+    const orderItems = items.map((item) => ({
+      order_id: order.id,
+      product_id: item.product.id,
+      quantity: item.quantity,
+      size: item.size,
+    }))
+    
+    console.log(orderItems);
+
+    insertOrderItems(orderItems , {
+        onSuccess() {
+          console.log(orderItems);
+          clearCart();
+          router.push(`/(user)/orders/${order.id}`);
+        },
       }
     )
   }

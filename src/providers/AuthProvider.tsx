@@ -43,9 +43,6 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session)
         })
-
-        console.log(profile)
-
     }, [])
 
     return (

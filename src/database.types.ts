@@ -23,7 +23,7 @@ export type Database = {
           id?: number
           order_id: number
           product_id: number
-          quantity: number
+          quantity?: number
           size: string
         }
         Update: {
@@ -64,7 +64,7 @@ export type Database = {
           id?: number
           status?: string
           total: number
-          user_id?: string
+          user_id: string
         }
         Update: {
           created_at?: string
@@ -95,7 +95,7 @@ export type Database = {
           created_at?: string
           id?: number
           image?: string | null
-          name: string
+          name?: string
           price: number
         }
         Update: {

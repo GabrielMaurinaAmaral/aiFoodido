@@ -2,10 +2,13 @@ import {Text, FlatList, ActivityIndicator } from "react-native";
 
 import OrderListItem from '@/components/OrderListItem'
 import { useOrderList } from "@/api/orders";
+import { useInsertOrderSubscription } from "@/api/orders/subscriptions";
 
 export default function OrdersScreen() {
     const { data: orders, isLoading, error } = useOrderList({ archived: false });
     
+    useInsertOrderSubscription()
+
     if (isLoading) {
       return <ActivityIndicator />;
     }
@@ -22,3 +25,4 @@ export default function OrdersScreen() {
         />
     )
 }
+

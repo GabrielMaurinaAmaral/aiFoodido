@@ -11,12 +11,14 @@ const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL']
 
 export default function ProductDetailsScreen() {
     const { id } = useLocalSearchParams()
+    const product = products.find((p) => p.id.toString() === id)
+
+    const { addItem } = useCart()
+
+    const router = useRouter()
+
     const [selectedSize, setSelectedSize] = useState<PizzaSize>(sizes[2])
 
-    const product = products.find((p) => p.id.toString() === id)
-    const { addItem } = useCart()
-    const router = useRouter();
-    
     const addToCart = () => {
         if (!product)
             return
@@ -27,11 +29,12 @@ export default function ProductDetailsScreen() {
     return (
         <View style={styles.container}>
             <Stack.Screen options={{ title: product.name }} />
+
             <Image source={{ uri: product.image }}
                 style={styles.image}
                 resizeMode='contain'
             />
-            
+
             <Text style={styles.subtitle}>Select Size</Text>
             <View style={styles.sizes}>
                 {sizes.map((size) => (
@@ -54,6 +57,7 @@ export default function ProductDetailsScreen() {
                     </Pressable>
                 ))}
             </View>
+
             <Text style={styles.price}> Price: ${product.price.toFixed(2)}</Text>
             <Button onPress={addToCart} text="Add to cart" />
         </View>

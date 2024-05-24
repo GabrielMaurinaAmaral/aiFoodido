@@ -5,6 +5,7 @@ import { Text, View,  StyleSheet, FlatList, ActivityIndicator } from 'react-nati
 import OrderListItem from '@/components/OrderListItem'
 import OrderItemListItem from '@/components/OrderItemListItem'
 import { useOrderDetails } from '@/api/orders'
+import { useUpdateOrderSubscription } from '@/api/orders/subscriptions'
 
 export default function OrdersDetailsScreen() {
     const { id: idString } = useLocalSearchParams();
@@ -12,9 +13,12 @@ export default function OrdersDetailsScreen() {
   
     const { data: order, isLoading, error } = useOrderDetails(id);
   
+    useUpdateOrderSubscription(id);
+
     if (isLoading) {
       return <ActivityIndicator />;
     }
+    
     if (error) {
       return <Text>Failed to fetch</Text>;
     }

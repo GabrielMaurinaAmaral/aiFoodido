@@ -19,17 +19,23 @@ export default function CreateScreen() {
     const isUpdate = !!id
 
     const { mutate: insertProduct } = useInsertProduct()
-    const { mutate: updateProduct } = useUpdateProduct();
-    const { mutate: deleteProduct } = useDeleteProduct();
+    const { mutate: updateProduct } = useUpdateProduct()
+    const { data: updatingProduct } = useProduct(id)
+    const { mutate: deleteProduct } = useDeleteProduct()
 
     const router = useRouter()
 
+    useEffect(() => {
+        if (updatingProduct) {
+            setName(updatingProduct.name);
+            setPrice(updatingProduct.price.toString());
+            setImage(updatingProduct.image);
+        }
+    }, [updatingProduct]);
 
     const resetFields = () => {
         setName('')
         setPrice('')
-        setImage('')
-        console.log('resetFields')
     }
 
     const validateInput = () => {
@@ -67,8 +73,8 @@ export default function CreateScreen() {
             {
                 onSuccess: () => {
                     console.log('Create dish', image, name, price)
-                    resetFields();
-                    router.back();
+                    resetFields()
+                    router.back()
                 },
             }
         )
@@ -104,7 +110,7 @@ export default function CreateScreen() {
                 resetFields()
                 router.back()
             },
-        });
+        })
     }
 
     const pickImage = async () => {
